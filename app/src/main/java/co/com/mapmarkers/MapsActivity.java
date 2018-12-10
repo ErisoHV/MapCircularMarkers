@@ -34,6 +34,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     public static Bitmap getCircledBitmap(String hexColor, int diameter) {
+        float radius = diameter / 2;
         Bitmap output = Bitmap.createBitmap(diameter, diameter, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
         final Paint paint = new Paint();
@@ -41,7 +42,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         paint.setAntiAlias(true);
         canvas.drawARGB(0,0,0,0);
         paint.setColor(Color.parseColor(hexColor));
-        canvas.drawCircle(diameter / 2, diameter / 2, diameter / 2, paint);
+        canvas.drawCircle(radius, radius, radius, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(output, rect, rect, paint);
         return output;
@@ -52,6 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Bitmap dstBitmap = Bitmap.createBitmap(dstBitmapWidth, dstBitmapWidth, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(dstBitmap);
         canvas.drawBitmap(srcBitmap, borderWidth, borderWidth, null);
+        float cxcy = canvas.getWidth() / 2;
         Paint paint = new Paint();
         paint.setColor(borderColor);
         paint.setAlpha(60);
@@ -59,9 +61,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         paint.setStrokeWidth(borderWidth);
         paint.setAntiAlias(true);
         canvas.drawCircle(
-                canvas.getWidth() / 2, // cx
-                canvas.getWidth() / 2, // cy
-                canvas.getWidth()/2 - borderWidth / 2, // Radius
+                cxcy, // cx
+                cxcy, // cy
+                cxcy - borderWidth / 2, // Radius
                 paint // Paint
         );
         srcBitmap.recycle();
